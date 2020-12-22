@@ -1,37 +1,27 @@
 package cinema;
 
+import java.util.Scanner;
+
 public class Cinema {
 
     public static void main(String[] args) {
-        int rows = 8;
-        int cols = 9;
-        int rowCounter = 1;
-        int colCounter = 1;
+        Scanner sc = new Scanner(System.in);
 
-        String[][] matrix = new String[8][9];
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                if (i == 0 && j == 0) {
-                    matrix[i][j] = " ";
-                } else if (j == 0) {
-                    matrix[i][j] = String.format("%d", rowCounter);
-                    rowCounter++;
-                } else if (i == 0) {
-                    matrix[i][j] = String.format("%d", colCounter);
-                    colCounter++;
-                } else {
-                    matrix[i][j] = "S";
-                }
+        System.out.print("Enter the number of rows: ");
+        int rows = sc.nextInt();
+        System.out.print("Enter the number of seats in each row: ");
+        int seatsPerRow = sc.nextInt();
+        System.out.print("Total income: ");
+        if (rows * seatsPerRow <= 60) {
+            System.out.println("$" + (rows * seatsPerRow * 10));
+        } else {
+            if (rows % 2 == 0) {
+                int income = rows / 2 * seatsPerRow * 18;
+                System.out.println("$" + income);
+            } else {
+                int income = ((rows - 1) / 2) * seatsPerRow * 10 + (((rows - 1) / 2) + 1) * seatsPerRow * 8;
+                System.out.println("$" + income);
             }
-        }
-
-        System.out.println("Cinema:");
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                System.out.print(matrix[i][j] + " ");
-            }
-            System.out.println();
         }
     }
 }
