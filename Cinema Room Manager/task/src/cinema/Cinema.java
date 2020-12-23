@@ -15,18 +15,22 @@ public class Cinema {
         String[][] matrix;
         matrix = fillMatrix(rows, seatsPerRow);
 
-        printSeatsInScreenRoom(matrix, rows, seatsPerRow);
+        int selection = 9;
 
-        System.out.print("Enter a row number: ");
-        int rowNum = sc.nextInt();
-        System.out.print("Enter a seat number in that row: ");
-        int seatNum = sc.nextInt();
-
-        int price = price(rows, seatsPerRow, rowNum);
-
-        System.out.printf("Ticket price: $%d\n", price);
-
-        printSeatsInScreenRoom(bookSeatInMatrix(matrix, rowNum, seatNum), rows, seatsPerRow);
+        while (selection != 0) {
+            System.out.println("1. Show the seats\n2. Buy a ticket\n0. Exit");
+            selection = sc.nextInt();
+            switch (selection) {
+                case 1:
+                    printSeatsInScreenRoom(matrix, rows, seatsPerRow);
+                    break;
+                case 2:
+                    bookSeatInMatrix(matrix, sc, rows, seatsPerRow);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     public static int price(int rows, int seatsPerRow, int rowNum) {
@@ -87,17 +91,24 @@ public class Cinema {
     }
 
     public static void printSeatsInScreenRoom(String[][] matrix, int rows, int seatsPerRow) {
-        System.out.println("Cinema:");
+        System.out.println("\nCinema:");
         for (int i = 0; i < rows + 1; i++) {
             for (int j = 0; j < seatsPerRow + 1; j++) {
                 System.out.print(matrix[i][j] + " ");
             }
             System.out.println();
         }
+        System.out.println();
     }
 
-    public static String[][] bookSeatInMatrix(String[][] matrix, int rowNumber, int seatNum) {
-        matrix[rowNumber][seatNum] = "B";
+    public static String[][] bookSeatInMatrix(String[][] matrix, Scanner sc, int rows, int seatsPerRow) {
+        System.out.print("Enter a row number: ");
+        int rowNum = sc.nextInt();
+        System.out.print("Enter a seat number in that row: ");
+        int seatNum = sc.nextInt();
+        matrix[rowNum][seatNum] = "B";
+        int price = price(rows, seatsPerRow, rowNum);
+        System.out.println("Ticket price: $" + price);
         return matrix;
     }
 }
